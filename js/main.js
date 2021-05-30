@@ -1,3 +1,5 @@
+'use strict';
+
 class ProductsList {
     constructor(container = '.products__list') {
         this.container = container;
@@ -74,7 +76,7 @@ class Cart {
 
     getSum() {}
 
-    render()
+    render() {}
 }
 
 // наследование и переопределение конструктора - предположение, не утверждение
@@ -90,7 +92,7 @@ class CartItem extends ProductsItem {
 
     addToFav() {}
 
-    render()
+    render() {}
 }
 
 let list = new ProductsList();
