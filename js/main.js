@@ -1,34 +1,25 @@
 'use strict';
 
+const API = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses';
+
 class ProductsList {
     constructor(container = '.products__list') {
         this.container = container;
         this.products = [];
-        this.fetchProducts();
+        this.getProducts()
+            .then(data => {
+                this.products = [...data];
+                this.render();
+                this.getSum();
+            });
     }
 
-    fetchProducts() {
-        this.products = [{
-                id: 1,
-                title: 'Notebook',
-                price: 80000,
-            },
-            {
-                id: 2,
-                title: 'Mouse',
-                price: 3000
-            },
-            {
-                id: 3,
-                title: 'Keyboard',
-                price: 6000
-            },
-            {
-                id: 4,
-                title: 'Gamepad',
-                price: 4000
-            },
-        ];
+    getProducts() {
+        return fetch(`${API}/catalogData.json`)
+            .then(result => result.json())
+            .catch(error => {
+                console.log(error);
+            })
     }
 
     getSum() {
@@ -36,7 +27,7 @@ class ProductsList {
         this.products.forEach(product => {
             sum += product.price;
         });
-        console.log(sum);
+        console.log(`Общая стоимость товаров на странице: ${sum} руб.`);
     }
 
     render() {
@@ -49,10 +40,11 @@ class ProductsList {
 }
 
 class ProductsItem {
-    constructor(product) {
-        this.title = product.title;
+    constructor(product, img = 'https://placehold.it/200x150') {
+        this.title = product.product_name;
         this.price = product.price;
-        this.id = product.id;
+        this.id = product.id_product;
+        this.img = img;
     }
 
     render() {
@@ -96,5 +88,3 @@ class CartItem extends ProductsItem {
 }
 
 let list = new ProductsList();
-list.render();
-list.getSum();
