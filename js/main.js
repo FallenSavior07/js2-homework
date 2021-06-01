@@ -5,18 +5,19 @@ const API = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-a
 class ProductsList {
     constructor(container = '.products__list') {
         this.container = container;
+        this.goods = [];
         this.products = [];
-        this.getProducts()
-            .then(data => {
-                this.products = [...data];
-                this.render();
-                this.getSum();
-            });
+        this.getProducts();
     }
 
     getProducts() {
-        return fetch(`${API}/catalogData.json`)
+        fetch(`${API}/catalogData.json`)
             .then(result => result.json())
+            .then(data => {
+                this.goods = [...data];
+                this.render();
+                this.getSum();
+            })
             .catch(error => {
                 console.log(error);
             })
@@ -32,8 +33,9 @@ class ProductsList {
 
     render() {
         const block = document.querySelector(this.container);
-        this.products.forEach(product => {
+        this.goods.forEach(product => {
             const productObj = new ProductsItem(product);
+            this.products.push(productObj);
             block.insertAdjacentHTML('beforeend', productObj.render());
         });
     }
@@ -88,3 +90,9 @@ class CartItem extends ProductsItem {
 }
 
 let list = new ProductsList();
+let cartButton = document.querySelector('.header__button');
+let cartList = document.querySelector('.header__cart');
+
+cartButton.addEventListener('click', () => {
+    cartList.classList.toggle('hidden');
+})
