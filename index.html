@@ -30,27 +30,29 @@
 	</header>
 	<main class="main">
 		<div class="main__wrapper container">
-			<aside class="subscribe">
-				<h2 class="visually-hidden">Subscribe Form</h2>
-				<form class="subscribe__form subscribe-form" action="#">
-					<fieldset class="subscribe-form__fieldset fieldset">
+			<aside class="feedback">
+				<h2 class="visually-hidden">Feedback Form</h2>
+				<form class="feedback__form feedback-form" action="#">
+					<fieldset class="feedback-form__fieldset fieldset">
 						<legend class="fieldset__legend">Ваше имя</legend>
-						<input class="fieldset__input fieldset__input_first-name" type="text" placeholder="Имя"
-							required>
-						<input class="fieldset__input fieldset__input_last-name" type="text" placeholder="Фамилия"
-							required>
+						<input class="fieldset__input fieldset__input_first-name" name="first name" type="text"
+							placeholder="Имя" required>
+						<input class="fieldset__input fieldset__input_last-name" name="last name" type="text"
+							placeholder="Фамилия" required>
 					</fieldset>
-					<fieldset class="subscribe-form__fieldset fieldset">
+					<fieldset class="feedback-form__fieldset fieldset">
 						<legend class="fieldset__legend">Контакты</legend>
-						<input class="fieldset__input fieldset__input_email" type="email" placeholder="Email" required>
-						<input class="fieldset__input fieldset__input_tel" type="tel" placeholder="Телефон" required>
+						<input class="fieldset__input fieldset__input_email" name="email" type="email"
+							placeholder="Email" required>
+						<input class="fieldset__input fieldset__input_tel" name="phone" type="tel" placeholder="Телефон"
+							required>
 					</fieldset>
-					<p class="subscribe-form__text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores,
+					<p class="feedback-form__text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores,
 						eveniet
 						impedit, minus quasi inventore architecto quidem labore, error excepturi iste veniam
 						doloribus
 						ex consequuntur distinctio eius! Maiores consectetur mollitia veritatis?</p>
-					<button class="subscribe-form__button" type="submit">подписаться</button>
+					<button class="feedback-form__button" type="submit">подписаться</button>
 				</form>
 			</aside>
 			<section class="products products-container">
@@ -60,6 +62,18 @@
 		</div>
 	</main>
 	<script src="js/main.js"></script>
+	<script src="js/validator.js"></script>
+	<script>
+		window.onload = () => {
+			document.querySelector('.feedback-form').addEventListener('submit', event => {
+				let valid = new Validator('.feedback-form');
+				valid.validateForm();
+				if (!valid.valid) {
+					event.preventDefault();
+				}
+			})
+		}
+	</script>
 </body>
 
 </html>
