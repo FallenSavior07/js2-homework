@@ -13,7 +13,8 @@ const app = new Vue({
         filteredProducts: [],
         isVisibleCart: false,
         searchLine: '',
-        productsEmpty: false
+        productsEmpty: false,
+        cartEmpty: false
     },
 
     methods: {
@@ -26,7 +27,20 @@ const app = new Vue({
         },
 
         addProduct(product) {
-            console.log(product.id_product);
+            this.getJson(`${API}/addToBasket.json`)
+                .then(data => {
+                    if (data.result === 1) {
+                        let find = this.cartProducts.find(el => el.id_product === product.id_product);
+                        if (find) {
+                            find.quantity++;
+                        } else {
+                            const prod = Object.assign({
+                                quantity: 1
+                            }, product);
+                            this.cartProducts.push(prod)
+                        }
+                    }
+                })
         },
 
         getSum() {
@@ -42,16 +56,24 @@ const app = new Vue({
             this.filteredProducts = this.products.filter(product => {
                 return regexp.test(product.product_name);
             })
-            if (!this.filteredProducts.length == 0) {
-                this.productsEmpty = false;
-            } else {
-                this.productsEmpty = true;
-            }
         },
 
         changeVisiblityOfCart() {
             this.isVisibleCart = !this.isVisibleCart;
-        }
+        },
+
+        removeCartProduct(product) {
+            this.getJson(`${API}/deleteFromBasket.json`)
+                .then(data => {
+                    if (data.result === 1) {
+                        if (product.quantity > 1) {
+                            product.quantity--;
+                        } else {
+                            this.cartProducts.splice(this.cartProducts.indexOf(product), 1);
+                        }
+                    }
+                })
+        },
     },
 
     mounted() {
