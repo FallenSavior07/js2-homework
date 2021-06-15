@@ -12,15 +12,14 @@ const app = new Vue({
         cartProducts: [],
         filteredProducts: [],
         isVisibleCart: false,
+        productDataError: false,
+        cartDataError: false
     },
 
     methods: {
         getJson(url) {
             return fetch(url)
                 .then(result => result.json())
-                .catch(error => {
-                    console.log(error);
-                })
         },
 
         addProduct(product) {
@@ -83,6 +82,10 @@ const app = new Vue({
                     this.filteredProducts.push(el);
                 }
                 this.getSum();
+            })
+            .catch(error => {
+                console.log(error);
+                this.productDataError = true;
             });
 
         this.getJson(`${API + this.cartUrl}`)
@@ -92,6 +95,10 @@ const app = new Vue({
                     el.altForImg = `product-${el.id_product}`;
                     this.cartProducts.push(el);
                 }
-            });
+            })
+            .catch(error => {
+                console.log(error);
+                this.cartDataError = true;
+            })
     }
 })

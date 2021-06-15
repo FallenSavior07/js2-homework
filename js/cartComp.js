@@ -4,10 +4,10 @@ Vue.component('cart', {
 	props: ['cartItems', 'visibility'],
 	template: `
 	<div v-show="visibility" class="header__cart cart">
-		<p v-show="cartItems.length == 0" class="cart__warning">Корзина пуста.</p>
+		<slot></slot>
+		<p v-if="cartItems.length == 0" class="cart__warning">Корзина пуста.</p>
 		<ul class="cart__list">
-			<cart-item v-for="item of cartItems" :key="item.id_product" :cart-item="item">
-			</cart-item>
+			<cart-item v-for="item of cartItems" :key="item.id_product" :cart-item="item"></cart-item>
 		</ul>
 	</div>
     `
