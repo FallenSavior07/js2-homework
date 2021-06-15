@@ -12,9 +12,6 @@ const app = new Vue({
         cartProducts: [],
         filteredProducts: [],
         isVisibleCart: false,
-        searchLine: '',
-        productsEmpty: false,
-        cartEmpty: false
     },
 
     methods: {
@@ -51,8 +48,8 @@ const app = new Vue({
             console.log(`Общая стоимость товаров в каталоге: ${sum} руб.`);
         },
 
-        filterProducts() {
-            const regexp = new RegExp(this.searchLine, 'i');
+        filterProducts(searchLine) {
+            const regexp = new RegExp(searchLine, 'i');
             this.filteredProducts = this.products.filter(product => {
                 return regexp.test(product.product_name);
             })
@@ -80,6 +77,8 @@ const app = new Vue({
         this.getJson(`${API + this.catalogUrl}`)
             .then(data => {
                 for (let el of data) {
+                    el.img = `img/product-${el.id_product}.jpg`;
+                    el.altForImg = `product-${el.id_product}`;
                     this.products.push(el);
                     this.filteredProducts.push(el);
                 }
@@ -89,6 +88,8 @@ const app = new Vue({
         this.getJson(`${API + this.cartUrl}`)
             .then(data => {
                 for (let el of data.contents) {
+                    el.img = `img/product-${el.id_product}.jpg`;
+                    el.altForImg = `product-${el.id_product}`;
                     this.cartProducts.push(el);
                 }
             });
