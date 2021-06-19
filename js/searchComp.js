@@ -1,11 +1,11 @@
-Vue.component('search', {
+const search = {
 	data() {
 		return {
 			userSearch: ''
 		}
 	},
 	template: `
-	<form class="header__search search-form" action="#" @submit.prevent='$parent.filterProducts(userSearch)'>
+	<form class="header__search search-form" action="#" @submit.prevent='$parent.$refs.products.filterProducts(userSearch)'>
 		<label for="search-form__input" class="search-form__label"></label>
 		<input id="search-form__input" class="search-form__input" type="text" placeholder="Поиск"
 			v-model.lazy="userSearch">
@@ -16,4 +16,4 @@ Vue.component('search', {
 		</button>
 	</form>
     `
-})
+}
