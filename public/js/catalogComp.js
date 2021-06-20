@@ -23,10 +23,11 @@ const products = {
 			catalogUrl: '/catalogData.json',
 			products: [],
 			filteredProducts: [],
+			catalogIsEmpty: false,
 		}
 	},
 	mounted() {
-		this.$parent.getJson(`${API + this.catalogUrl}`)
+		this.$parent.getJson(`/api/products`)
 			.then(data => {
 				for (let el of data) {
 					el.img = `img/product-${el.id_product}.jpg`;
@@ -39,6 +40,7 @@ const products = {
 			.catch(error => {
 				console.log(error);
 				this.$parent.productDataError = true;
+				this.catalogIsEmpty = false;
 			});
 	},
 	methods: {
@@ -47,6 +49,11 @@ const products = {
 			this.filteredProducts = this.products.filter(product => {
 				return regexp.test(product.product_name);
 			})
+			if (this.filteredProducts.length == 0) {
+				this.catalogIsEmpty = true;
+			} else {
+				this.catalogIsEmpty = false;
+			}
 		},
 		getSum() {
 			let sum = 0;
@@ -60,7 +67,7 @@ const products = {
 	<section class="products products-container">
 		<h2 class="products visually-hidden">Products</h2>
 		<slot></slot>
-		<p v-if="products.length == 0" class="products__warning">К сожалению, на ваш поисковый запрос товары не найдены.</p>
+		<p v-if="catalogIsEmpty" class="products__warning">К сожалению, на ваш поисковый запрос товары не найдены.</p>
 		<ul class="products__list">
 			<product v-for="product of filteredProducts" :key="product.id_product" :product="product"></product>
 		</ul>

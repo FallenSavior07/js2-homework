@@ -26,50 +26,75 @@ const cart = {
 	components: {
 		cartItem
 	},
+
 	data() {
 		return {
 			cartUrl: '/getBasket.json',
 			cartProducts: [],
-			isVisibleCart: false
+			isVisibleCart: false,
+			cartIsEmpty: false
 		}
 	},
+
 	methods: {
 		addProduct(product) {
-			this.$parent.getJson(`${API}/addToBasket.json`)
-				.then(data => {
-					if (data.result === 1) {
-						let find = this.cartProducts.find(el => el.id_product === product.id_product);
-						if (find) {
+			let find = this.cartProducts.find(el => el.id_product === product.id_product);
+			if (find) {
+				this.$parent.putJson(`/api/cart/${product.id_product}/${product.product_name}`, {
+						quantity: 1
+					})
+					.then(data => {
+						if (data.result) {
 							find.quantity++;
-						} else {
-							const prod = Object.assign({
-								quantity: 1
-							}, product);
-							this.cartProducts.push(prod)
 						}
-					}
-				})
+					})
+			} else {
+				let prod = Object.assign({
+					quantity: 1
+				}, product);
+				this.$parent.postJson(`api/cart/${product.id_product}/${product.product_name}`, prod)
+					.then(data => {
+						if (data.result) {
+							this.cartProducts.push(prod);
+						}
+					})
+			}
 		},
 
 		removeCartProduct(product) {
-			this.$parent.getJson(`${API}/deleteFromBasket.json`)
-				.then(data => {
-					if (data.result === 1) {
-						if (product.quantity > 1) {
+			if (product.quantity > 1) {
+				this.$parent.putJson(`/api/cart/${product.id_product}/${product.product_name}`, {
+						quantity: -1
+					})
+					.then(data => {
+						if (data.result) {
 							product.quantity--;
-						} else {
-							this.cartProducts.splice(this.cartProducts.indexOf(product), 1);
 						}
-					}
-				})
+					})
+			} else {
+				this.$parent.delJson(`/api/cart/${product.id_product}/${product.product_name}`, product)
+					.then(data => {
+						if (data.result) {
+							this.cartProducts.splice(this.cartProducts.indexOf(product), 1);
+							if (this.cartProducts.length == 0) {
+								this.cartIsEmpty = true;
+							} else {
+								this.cartIsEmpty = false;
+							}
+						} else {
+							console.log('error');
+						}
+					})
+			}
 		},
 
 		changeVisiblityOfCart() {
 			this.isVisibleCart = !this.isVisibleCart;
 		},
 	},
+
 	mounted() {
-		this.$parent.getJson(`${API + this.cartUrl}`)
+		this.$parent.getJson(`/api/cart`)
 			.then(data => {
 				for (let el of data.contents) {
 					el.img = `img/product-${el.id_product}.jpg`;
@@ -80,12 +105,14 @@ const cart = {
 			.catch(error => {
 				console.log(error);
 				this.$parent.cartDataError = true;
+				this.cartIsEmpty = false;
 			})
 	},
+
 	template: `
 	<div v-show="isVisibleCart" class="header__cart cart">
 		<slot></slot>
-		<p v-if="cartProducts.length == 0" class="cart__warning">Корзина пуста.</p>
+		<p v-if="cartIsEmpty" class="cart__warning">Корзина пуста.</p>
 		<ul class="cart__list">
 			<cart-item v-for="product of cartProducts" :key="product.id_product" :cart-item="product"></cart-item>
 		</ul>

@@ -71,17 +71,6 @@
 	<script src="js/searchComp.js"></script>
 	<script src="js/main.js"></script>
 	<script src="js/validator.js"></script>
-	<script>
-		window.onload = () => {
-			document.querySelector('.feedback-form').addEventListener('submit', event => {
-				let valid = new Validator('.feedback-form');
-				valid.validateForm();
-				if (!valid.valid) {
-					event.preventDefault();
-				}
-			})
-		}
-	</script>
 </body>
 
 </html>
