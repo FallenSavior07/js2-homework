@@ -67,3 +67,13 @@ class Validator {
 		})
 	}
 }
+
+window.onload = () => {
+	document.querySelector('.feedback-form').addEventListener('submit', event => {
+		let valid = new Validator('.feedback-form');
+		valid.validateForm();
+		if (!valid.valid) {
+			event.preventDefault();
+		}
+	})
+}

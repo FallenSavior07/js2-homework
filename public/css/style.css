@@ -42,6 +42,17 @@ body {
 	fill: #A4A4A4;
 }
 
+.data-error {
+	width: 300px;
+	margin: 50px 0 0 0;
+	padding: 18px 11px;
+	font-size: 16px;
+	line-height: 19px;
+	font-weight: 400;
+	background-color: #CD5C5C;
+	border-color: #CD5C5C;
+}
+
 .header {
 	background-color: var(--header-bkg);
 }
