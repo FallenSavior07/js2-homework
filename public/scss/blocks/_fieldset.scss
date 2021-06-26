@@ -1,0 +1,35 @@
+.fieldset {
+	&__legend {
+		@include font (16px, 19px, 400);
+		color: $super-black-color;
+	}
+
+	&__input {
+		width: 100%;
+		min-height: 45px;
+		margin: 20px 0 0 0;
+		box-sizing: border-box;
+		padding: 13px 17px 15px 17px;
+		outline: none;
+		border: 1px solid $input-border;
+		@include font(13px, 16px, 300);
+	}
+
+	&__input:focus {
+		outline: none;
+	}
+
+	&__input_invalid {
+		border: 1px solid $red-color;
+	}
+
+	&__input_valid {
+		border: 1px solid $green-color;
+	}
+
+	&__error-msg {
+		margin: 10px 0;
+		@include font (13px, 16px, 300);
+		color: $red-color;
+	}
+}

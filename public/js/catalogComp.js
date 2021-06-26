@@ -4,7 +4,7 @@ const product = {
 	props: ['product'],
 	template: `
 	<li class="products__item products-item">
-		<img class="products-item__image" :src="product.img" alt="product.altForImg" width="300" height="300">
+		<img class="products-item__image" :src="product.img" alt="product.altForImg" width="340" height="340">
 		<h3 class="products-item__title">{{product.product_name}}</h3>
 		<div class="products-item__inner">
 			<p class="products-item__price">{{product.price}} рублей</p>
@@ -35,7 +35,6 @@ const products = {
 					this.products.push(el);
 					this.filteredProducts.push(el);
 				}
-				this.getSum();
 			})
 			.catch(error => {
 				console.log(error);
@@ -55,22 +54,16 @@ const products = {
 				this.catalogIsEmpty = false;
 			}
 		},
-		getSum() {
-			let sum = 0;
-			this.products.forEach(product => {
-				sum += product.price;
-			});
-			console.log(`Общая стоимость товаров в каталоге: ${sum} руб.`);
-		},
 	},
 	template: `
-	<section class="products products-container">
+	<section class="products container">
 		<h2 class="products visually-hidden">Products</h2>
 		<slot></slot>
 		<p v-if="catalogIsEmpty" class="products__warning">К сожалению, на ваш поисковый запрос товары не найдены.</p>
 		<ul class="products__list">
 			<product v-for="product of filteredProducts" :key="product.id_product" :product="product"></product>
 		</ul>
+		<button class="products__button" type="button">показать ещё</button>
 	</section>
     `
 };

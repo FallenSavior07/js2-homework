@@ -1,22 +1,47 @@
 [
   {
     "id_product": 1,
-    "product_name": "Ноутбук",
-    "price": 45600
+    "product_name": "Ноутбук Acer",
+    "price": 89990
   },
   {
     "id_product": 2,
-    "product_name": "Мышка",
-    "price": 1000
+    "product_name": "Мышка Razer",
+    "price": 3990
   },
   {
     "id_product": 3,
-    "product_name": "Клавиатура",
-    "price": 6000
+    "product_name": "Клавиатура Logitech",
+    "price": 5990
   },
   {
     "id_product": 4,
-    "product_name": "Геймпад",
-    "price": 5000
+    "product_name": "Геймпад Sony DualSense",
+    "price": 5990
+  },
+  {
+    "id_product": 5,
+    "product_name": "Геймпад Xbox",
+    "price": 4250
+  },
+  {
+    "id_product": 6,
+    "product_name": "Наушники SteelSeries",
+    "price": 4990
+  },
+  {
+    "id_product": 7,
+    "product_name": "Коврик Razer",
+    "price": 790
+  },
+  {
+    "id_product": 8,
+    "product_name": "Монитор Dell",
+    "price": 34990
+  },
+  {
+    "id_product": 9,
+    "product_name": "Кресло AeroCool",
+    "price": 14990
   }
 ]

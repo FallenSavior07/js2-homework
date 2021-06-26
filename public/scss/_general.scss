@@ -1,0 +1,59 @@
+.visually-hidden {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	margin: -1px;
+	padding: 0;
+	overflow: hidden;
+	border: 0;
+	clip: rect(0 0 0 0)
+}
+
+body {
+	font-family: sans-serif;
+	font-size: 14px;
+	line-height: 17px;
+	font-weight: 400;
+	font-style: normal;
+}
+
+.container {
+	width: 1140px;
+	margin: 0 auto;
+}
+
+.hidden {
+	display: none;
+}
+
+.link {
+	text-decoration-line: none;
+	color: $white-color;
+}
+
+.link:hover {
+	color: $button-color;
+}
+
+.icon {
+	fill: $white-color;
+}
+
+.line {
+	margin: 0;
+	align-self: stretch;
+	background: $hr-color;
+	opacity: 0.2;
+}
+
+
+.data-error {
+	width: 300px;
+	margin: 50px 0 0 0;
+	padding: 18px 11px;
+	font-size: 16px;
+	line-height: 19px;
+	font-weight: 400;
+	background-color: $data-error;
+	border: 1px solid $data-error;
+}

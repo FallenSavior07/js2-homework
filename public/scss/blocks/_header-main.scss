@@ -1,0 +1,62 @@
+.header-main {
+	background-color: $white-color;
+
+	&__wrapper {
+		@include flex-space-between;
+		align-items: center;
+		min-height: 100px;
+	}
+
+	&__left-inner {
+		display: flex;
+	}
+
+	&__logo {
+		fill: $button-color;
+	}
+
+	&__button {
+		display: block;
+		width: 50px;
+		height: 50px;
+		padding: 10px;
+		box-sizing: border-box;
+		border: 1px solid $button-color;
+		border-radius: 3px;
+		background-color: $button-color;
+		cursor: pointer;
+		color: $white-color;
+		text-align: center;
+	}
+
+	&__button_catalog {
+		@include flex-y-center;
+		width: initial;
+		min-width: 150px;
+		padding: 10px 25px;
+		margin: 0 0 0 40px;
+		text-transform: capitalize;
+	}
+
+	&__button:hover {
+		background-color: $button-hover;
+	}
+
+	&__button-text {
+		margin: 0 0 0 15px;
+		@include font(16px, 19px, 400);
+	}
+
+	&__right-inner {
+		@include flex-space-between;
+		width: 200px;
+		position: relative;
+	}
+
+	&__cart {
+		position: absolute;
+		top: 75px;
+		right: -50px;
+		z-index: 3;
+	}
+}

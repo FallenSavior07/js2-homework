@@ -1,0 +1,46 @@
+.products-item {
+	width: 340px;
+	padding: 0 0 20px 0;
+	background: $white-color;
+	border: 1px solid $white-color;
+
+	&__title {
+		margin: 20px 0 15px 0;
+		padding: 0 0 0 15px;
+		font-size: 20px;
+		line-height: 24px;
+		font-weight: 700;
+		color: $button-color;
+		text-transform: uppercase;
+	}
+
+	&__inner {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		padding: 0 15px;
+	}
+
+	&__price {
+		@include font (16px, 19px, 400);
+		color: $super-black-color;
+	}
+
+	&__button {
+		min-width: 80px;
+		min-height: 50px;
+		padding: 10px 15px;
+		border: 1px solid $button-color;
+		background-color: $button-color;
+		border-radius: 3px;
+		@include font(13px, 16px, 700);
+		color: $white-color;
+		text-align: center;
+		cursor: pointer;
+	}
+
+	&__button:hover {
+		border: 1px solid $button-hover;
+		background-color: $button-hover;
+	}
+}

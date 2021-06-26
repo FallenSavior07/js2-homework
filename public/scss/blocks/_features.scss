@@ -1,0 +1,14 @@
+.features {
+	background-color: $black-color;
+
+	&__list {
+		@include flex-space-between;
+		padding: 103px 0;
+	}
+
+	&__item {
+		width: 360px;
+		@include flex-column-x-center;
+		color: $white-color;
+	}
+}
