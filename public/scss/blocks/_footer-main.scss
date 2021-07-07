@@ -1,0 +1,18 @@
+.footer-main {
+	@include flex-space-between;
+	padding: 50px 0;
+
+	&__item {
+		margin: 0 0 15px 0;
+	}
+
+	&__title {
+		margin: 0 0 25px 0;
+		@include font (16px, 19px, 700);
+		color: $white-color;
+	}
+
+	&__link {
+		@include font (14px, 17px, 400);
+	}
+}

@@ -1,0 +1,33 @@
+.item-descr {
+	&__button {
+		width: 25px;
+		height: 25px;
+		padding: 5px;
+		box-sizing: border-box;
+		border: 1px solid $super-black-color;
+		background-color: transparent;
+		cursor: pointer;
+		@include font(12px, 14px, 300);
+		text-align: center;
+	}
+
+	&__button:hover {
+		border: 1px solid $button-hover;
+		background-color: $button-hover;
+		color: $white-color;
+	}
+
+	&__text {
+		display: block;
+		width: 25px;
+		height: 25px;
+		padding: 5px;
+		box-sizing: border-box;
+		border-top: 1px solid $super-black-color;
+		border-bottom: 1px solid $super-black-color;
+		background-color: transparent;
+		cursor: pointer;
+		@include font(12px, 14px, 400);
+		text-align: center;
+	}
+}

@@ -1,0 +1,22 @@
+.header-top {
+	background-color: $black-color;
+
+	&__wrapper {
+		@include flex-space-between;
+		align-items: center;
+		padding: 10px 0;
+	}
+
+	&__left-inner {
+		width: 350px;
+		@include flex-space-between;
+	}
+
+	&__link {
+		@include font(16px, 19px, 400);
+	}
+
+	&__info {
+		color: $white-color;
+	}
+}

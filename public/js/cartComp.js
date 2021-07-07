@@ -15,7 +15,11 @@ const cartItem = {
 			</button>
 			<ul class="cart-item__list">
 				<li class="cart-item__item">{{ cartItem.price*cartItem.quantity }} рублей</li>
-				<li class="cart-item__item">Количество: {{ cartItem.quantity }}</li>
+				<li class="cart-item__item item-descr">
+					<button class="item-descr__button" type="button" @click="$root.$refs.cart.minusQuantityProduct(cartItem)"><i class="fas fa-minus"></i></button>
+					<p class="item-descr__text">{{ cartItem.quantity }}</p>
+					<button class="item-descr__button" type="button" @click="$root.$refs.cart.plusQuantityProduct(cartItem)"><i class="fas fa-plus"></i></button>
+				</li>
 			</ul>
 		</div>
 	</li>
@@ -31,6 +35,8 @@ const cart = {
 		return {
 			cartUrl: '/getBasket.json',
 			cartProducts: [],
+			sum: 0,
+			count: 0,
 			isVisibleCart: false,
 			cartIsEmpty: false
 		}
@@ -46,6 +52,8 @@ const cart = {
 					.then(data => {
 						if (data.result) {
 							find.quantity++;
+							this.sum += find.price;
+							this.count++;
 						}
 					})
 			} else {
@@ -56,51 +64,99 @@ const cart = {
 					.then(data => {
 						if (data.result) {
 							this.cartProducts.push(prod);
+							this.sum += prod.price;
+							this.count++;
+							this.checkIsCartEmpty();
 						}
 					})
-			}
+			};
+		},
+
+		plusQuantityProduct(product) {
+			this.$parent.putJson(`/api/cart/${product.id_product}/${product.product_name}`, {
+					quantity: 1
+				})
+				.then(data => {
+					if (data.result) {
+						product.quantity++;
+						this.sum += product.price;
+						this.count++;
+					}
+				})
 		},
 
 		removeCartProduct(product) {
-			if (product.quantity > 1) {
-				this.$parent.putJson(`/api/cart/${product.id_product}/${product.product_name}`, {
-						quantity: -1
-					})
-					.then(data => {
-						if (data.result) {
+			this.$parent.delJson(`/api/cart/${product.id_product}/${product.product_name}`, product)
+				.then(data => {
+					if (data.result) {
+						this.cartProducts.splice(this.cartProducts.indexOf(product), 1);
+						this.checkIsCartEmpty();
+						this.getSum();
+						this.getCount();
+					} else {
+						console.log('error');
+					}
+				})
+		},
+
+		minusQuantityProduct(product) {
+			this.$parent.putJson(`/api/cart/${product.id_product}/${product.product_name}`, {
+					quantity: -1
+				})
+				.then(data => {
+					if (data.result === 1) {
+						if (product.quantity > 1) {
 							product.quantity--;
-						}
-					})
-			} else {
-				this.$parent.delJson(`/api/cart/${product.id_product}/${product.product_name}`, product)
-					.then(data => {
-						if (data.result) {
-							this.cartProducts.splice(this.cartProducts.indexOf(product), 1);
-							if (this.cartProducts.length == 0) {
-								this.cartIsEmpty = true;
-							} else {
-								this.cartIsEmpty = false;
-							}
+							this.sum -= product.price;
+							this.count--;
 						} else {
-							console.log('error');
+							this.cartProducts.splice(this.cartProducts.indexOf(product), 1);
+							this.checkIsCartEmpty();
+							this.getSum();
+							this.getCount();
 						}
-					})
-			}
+					}
+				})
 		},
 
 		changeVisiblityOfCart() {
 			this.isVisibleCart = !this.isVisibleCart;
 		},
+
+		checkIsCartEmpty() {
+			if (this.cartProducts.length == 0) {
+				this.cartIsEmpty = true;
+			} else {
+				this.cartIsEmpty = false;
+			}
+		},
+
+		getSum() {
+			let sum = 0;
+			this.cartProducts.forEach(product => {
+				sum += product.price * product.quantity;
+			});
+			this.sum = sum;
+		},
+
+		getCount() {
+			let count = 0;
+			this.cartProducts.forEach(product => {
+				count += product.quantity;
+			});
+			this.count = count;
+		}
 	},
 
 	mounted() {
 		this.$parent.getJson(`/api/cart`)
 			.then(data => {
 				for (let el of data.contents) {
-					el.img = `img/product-${el.id_product}.jpg`;
-					el.altForImg = `product-${el.id_product}`;
 					this.cartProducts.push(el);
 				}
+				this.getSum();
+				this.getCount();
+				this.checkIsCartEmpty();
 			})
 			.catch(error => {
 				console.log(error);
@@ -110,12 +166,23 @@ const cart = {
 	},
 
 	template: `
-	<div v-show="isVisibleCart" class="header__cart cart">
+	<div v-show="isVisibleCart" class="header-main__cart cart">
 		<slot></slot>
 		<p v-if="cartIsEmpty" class="cart__warning">Корзина пуста.</p>
-		<ul class="cart__list">
-			<cart-item v-for="product of cartProducts" :key="product.id_product" :cart-item="product"></cart-item>
-		</ul>
+		<template v-else>
+			<ul class="cart__list">
+				<cart-item v-for="product of cartProducts" :key="product.id_product" :cart-item="product"></cart-item>
+			</ul>
+			<hr class="line">
+			<div class="cart__bot-inner">
+				<div class="cart__container">
+					<p class="cart__text">Товаров в корзине: {{ count }}</p>
+					<p class="cart__text cart__text_margin">Итого: {{ sum }} рублей</p>
+					<hr class="line">
+					<a href=# class="cart__button">Перейти к оформлению</a>
+				</div>
+			</div>
+		</template>
 	</div>
     `
 };

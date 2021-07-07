@@ -1,0 +1,24 @@
+.socials {
+	width: 200px;
+	@include flex-space-between;
+
+	&__link {
+		width: 32px;
+		height: 32px;
+		@include flex-x-y-center;
+		border-radius: 3px;
+		background: $white-color;
+	}
+
+	&__icon {
+		fill: $super-black-color;
+	}
+
+	&__link:hover {
+		background-color: $button-hover;
+	}
+
+	&__link:hover .socials__icon {
+		fill: $white-color;
+	}
+}

@@ -1,0 +1,42 @@
+.search-form {
+	@include flex-y-center;
+	min-width: 400px;
+	min-height: 50px;
+	position: relative;
+	margin: 0 0 0 15px;
+
+	&__input {
+		box-sizing: border-box;
+		min-width: 400px;
+		min-height: 50px;
+		padding: 10px 80px 10px 10px;
+		background-color: transparent;
+		border: 1px solid $subscribe-input;
+		border-radius: 3px;
+		outline: none;
+		font-family: inherit;
+		@include font (14px, 17px, 400);
+	}
+
+	&__input::placeholder {
+		color: $search-placeholder;
+	}
+
+	&__button {
+		position: absolute;
+		top: 5px;
+		right: 5px;
+		width: 40px;
+		height: 40px;
+		box-sizing: border-box;
+		padding: 5px;
+		background-color: $button-color;
+		border: none;
+		cursor: pointer;
+	}
+
+	&__button:hover {
+		background-color: $button-hover;
+	}
+
+}

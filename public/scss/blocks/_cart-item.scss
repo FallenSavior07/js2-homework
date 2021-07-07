@@ -1,0 +1,35 @@
+.cart-item {
+	display: flex;
+	min-height: 100px;
+
+	&__inner {
+		flex-grow: 1;
+		position: relative;
+		min-width: 200px;
+		margin: 20px 0 0 30px;
+	}
+
+	&__name {
+		display: block;
+		margin: 0 0 20px 0;
+		width: 170px;
+		@include font(16px, 19px, 700);
+		color: $button-color;
+		text-transform: uppercase;
+	}
+
+	&__button {
+		position: absolute;
+		top: 0;
+		right: 20px;
+		border: none;
+		background-color: transparent;
+		fill: $cross-btn-color;
+		cursor: pointer;
+	}
+
+	&__item {
+		display: flex;
+		margin: 0 0 15px 0;
+	}
+}

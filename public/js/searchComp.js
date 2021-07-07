@@ -5,9 +5,9 @@ const search = {
 		}
 	},
 	template: `
-	<form class="header__search search-form" action="#" @submit.prevent='$parent.$refs.products.filterProducts(userSearch)'>
+	<form class="header-main__search search-form" action="#" @submit.prevent='$parent.$refs.products.filterProducts(userSearch)'>
 		<label for="search-form__input" class="search-form__label"></label>
-		<input id="search-form__input" class="search-form__input" type="text" placeholder="Поиск"
+		<input id="search-form__input" class="search-form__input" type="text" placeholder="Поиск по сайту..."
 			v-model.lazy="userSearch">
 		<button class="search-form__button" type="submit">
 			<svg class="icon" width="27" height="28" viewBox="0 0 27 28" xmlns="http://www.w3.org/2000/svg">

@@ -1,0 +1,29 @@
+.features-item {
+	&__icon {
+		fill: $button-color;
+	}
+
+	&__icon_margin_delivery {
+		margin: 0 0 28px 0;
+	}
+
+	&__icon_margin_sales {
+		margin: 0 0 19px 0;
+	}
+
+	&__icon_margin_quality {
+		margin: 0 0 25px 0;
+	}
+
+	&__title {
+		margin: 0 0 16px 0;
+		@include font(20px, 24px);
+		text-align: center;
+	}
+
+	&__descr {
+		width: 310px;
+		@include font(14px, 17px, 300);
+		text-align: center;
+	}
+}
